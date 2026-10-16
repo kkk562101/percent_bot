@@ -231,6 +231,8 @@ def fetch_from_naver_search(keyword: str) -> List[Dict[str, Any]]:
 def load_env_file(env_path: Path = ENV_FILE_PATH) -> Dict[str, str]:
     """프로젝트 폴더의 .env 파일에서 환경변수를 읽어 딕셔너리로 반환"""
     if not env_path.exists():
+        if os.environ.get("KAKAO_REST_API_KEY") or os.environ.get("KAKAO_REFRESH_TOKEN"):
+            return {}
         raise FileNotFoundError(f".env 파일을 찾을 수 없습니다 ({env_path})")
 
     env_vars: Dict[str, str] = {}
